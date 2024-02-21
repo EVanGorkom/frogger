@@ -5,6 +5,7 @@ from car1 import Car1
 from car2 import Car2
 from truck import Truck
 from truck_rev import TruckRev
+from log1 import Log1
 import random
 
 pygame.init()
@@ -26,6 +27,8 @@ truck_frequency = 2000
 last_truck = pygame.time.get_ticks() - truck_frequency
 truck_rev_frequency = 4000
 last_truck_rev = pygame.time.get_ticks() - truck_rev_frequency
+log1_frequency = 4000
+last_log1 = pygame.time.get_ticks() - log1_frequency
 
 # Image variables
 background = pygame.image.load('img/background.png')
@@ -33,13 +36,13 @@ fitted_background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEI
 
 # Object starting positions
 frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
-# car1 = Car1(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
 # Groups
 car1_group = pygame.sprite.Group()
 car2_group = pygame.sprite.Group()
 truck_group = pygame.sprite.Group()
 truck_rev_group = pygame.sprite.Group()
+log1_group = pygame.sprite.Group()
 
 # Button booleans
 key_pressed = {
@@ -78,30 +81,40 @@ while running:
       if event.key in key_pressed:
         key_pressed[event.key] = False
 
+  # Spacing out all of the objects
   time_now = pygame.time.get_ticks()
   if time_now - last_car1 > car1_frequency:
     last_car1 = time_now
     car1 = Car1(SCREEN_WIDTH, 682) # position on the screen
     car_1 = Car1(SCREEN_WIDTH, 497) # position on the screen
     car1_group.add(car1, car_1)
-  elif time_now - last_car2 > car2_frequency:
+  
+  if time_now - last_car2 > car2_frequency:
     last_car2 = time_now
     car2 = Car2(-100, 437) # position on the screen
     car2_group.add(car2)
-  elif time_now - last_truck > truck_frequency:
+  
+  if time_now - last_truck > truck_frequency:
     last_truck = time_now
     truck = Truck(-160, 560) # position on the screen
     truck_group.add(truck)
-  elif time_now - last_truck_rev > truck_rev_frequency:
+  
+  if time_now - last_truck_rev > truck_rev_frequency:
     last_truck_rev = time_now
     truck_rev = TruckRev(SCREEN_WIDTH, 620) # position on the screen
     truck_rev_group.add(truck_rev)
+
+  if time_now - last_log1 > log1_frequency:
+    last_log1 = time_now
+    log1 = Log1(SCREEN_WIDTH, 310) # position on the screen
+    log1_group.add(log1)
 
   # Update cars
   car1_group.update()
   car2_group.update()
   truck_group.update()
   truck_rev_group.update()
+  log1_group.update()
 
   # render image variables
   screen.blit(fitted_background, (0,0))
@@ -110,6 +123,7 @@ while running:
   car2_group.draw(screen)
   truck_group.draw(screen)
   truck_rev_group.draw(screen)
+  log1_group.draw(screen)
 
   pygame.display.update()
 
