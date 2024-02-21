@@ -13,7 +13,7 @@ pygame.display.set_caption("Frogger")
 # Image variables
 background = pygame.image.load('img/background.png')
 fitted_background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
-frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370)
+frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Button booleans
 key_pressed = {
