@@ -4,6 +4,7 @@ from frog import Frog
 from car1 import Car1
 from car2 import Car2
 from truck import Truck
+from truck_rev import TruckRev
 import random
 
 pygame.init()
@@ -23,6 +24,8 @@ car2_frequency = 1000
 last_car2 = pygame.time.get_ticks() - car2_frequency
 truck_frequency = 2000
 last_truck = pygame.time.get_ticks() - truck_frequency
+truck_rev_frequency = 4000
+last_truck_rev = pygame.time.get_ticks() - truck_rev_frequency
 
 # Image variables
 background = pygame.image.load('img/background.png')
@@ -36,6 +39,7 @@ frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_
 car1_group = pygame.sprite.Group()
 car2_group = pygame.sprite.Group()
 truck_group = pygame.sprite.Group()
+truck_rev_group = pygame.sprite.Group()
 
 # Button booleans
 key_pressed = {
@@ -88,11 +92,16 @@ while running:
     last_truck = time_now
     truck = Truck(-160, 560) # position on the screen
     truck_group.add(truck)
+  elif time_now - last_truck_rev > truck_rev_frequency:
+    last_truck_rev = time_now
+    truck_rev = TruckRev(SCREEN_WIDTH, 620) # position on the screen
+    truck_rev_group.add(truck_rev)
 
   # Update cars
   car1_group.update()
   car2_group.update()
   truck_group.update()
+  truck_rev_group.update()
 
   # render image variables
   screen.blit(fitted_background, (0,0))
@@ -100,6 +109,7 @@ while running:
   car1_group.draw(screen)
   car2_group.draw(screen)
   truck_group.draw(screen)
+  truck_rev_group.draw(screen)
 
   pygame.display.update()
 
