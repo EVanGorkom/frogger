@@ -6,6 +6,7 @@ from car2 import Car2
 from truck import Truck
 from truck_rev import TruckRev
 from log1 import Log1
+from turtle1 import Turtle1
 import random
 
 pygame.init()
@@ -29,6 +30,8 @@ truck_rev_frequency = 4000
 last_truck_rev = pygame.time.get_ticks() - truck_rev_frequency
 log1_frequency = 4000
 last_log1 = pygame.time.get_ticks() - log1_frequency
+turtle1_frequency = 1500
+last_turtle1 = pygame.time.get_ticks() - turtle1_frequency
 
 # Image variables
 background = pygame.image.load('img/background.png')
@@ -43,6 +46,7 @@ car2_group = pygame.sprite.Group()
 truck_group = pygame.sprite.Group()
 truck_rev_group = pygame.sprite.Group()
 log1_group = pygame.sprite.Group()
+turtle1_group = pygame.sprite.Group()
 
 # Button booleans
 key_pressed = {
@@ -109,12 +113,18 @@ while running:
     log1 = Log1(SCREEN_WIDTH, 310) # position on the screen
     log1_group.add(log1)
 
+  if time_now - last_turtle1 > turtle1_frequency:
+    last_turtle1 = time_now
+    turtle1 = Turtle1(-100, 248) # position on the screen
+    turtle1_group.add(turtle1)
+
   # Update cars
   car1_group.update()
   car2_group.update()
   truck_group.update()
   truck_rev_group.update()
   log1_group.update()
+  turtle1_group.update()
 
   # render image variables
   screen.blit(fitted_background, (0,0))
@@ -124,6 +134,7 @@ while running:
   truck_group.draw(screen)
   truck_rev_group.draw(screen)
   log1_group.draw(screen)
+  turtle1_group.draw(screen)
 
   pygame.display.update()
 
