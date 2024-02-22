@@ -1,15 +1,15 @@
 import pygame
 from pygame.locals import *
-from frog import Frog
-from car1 import Car1
-from car2 import Car2
-from truck import Truck
-from truck_rev import TruckRev
-from log1 import Log1
-from log2 import Log2
-from log3 import Log3
-from turtle1 import Turtle1
-from turtle2 import Turtle2
+from lib.frog import Frog
+from lib.car1 import Car1
+from lib.car2 import Car2
+from lib.truck import Truck
+from lib.truck_rev import TruckRev
+from lib.log1 import Log1
+from lib.log2 import Log2
+from lib.log3 import Log3
+from lib.turtle1 import Turtle1
+from lib.turtle2 import Turtle2
 import random
 
 pygame.init()
@@ -21,8 +21,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Frogger")
 
 # Game variables
+lives = 3
 game_over = False
-variance = random.randint(0, 500)
+# variance = random.randint(0, 500)
 car1_frequency = 1500
 last_car1 = pygame.time.get_ticks() - car1_frequency
 car2_frequency = 1000
@@ -50,6 +51,8 @@ fitted_background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEI
 frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 # Groups
+frog_group = pygame.sprite.GroupSingle()
+frog_group.add(frog)
 car1_group = pygame.sprite.Group()
 car2_group = pygame.sprite.Group()
 truck_group = pygame.sprite.Group()
@@ -68,7 +71,9 @@ key_pressed = {
   pygame.K_RIGHT: False
 }
 
-# Main Game Loop
+
+
+### Main Game Loop
 running = True
 while running:
 
@@ -96,6 +101,39 @@ while running:
     elif event.type == pygame.KEYUP:
       if event.key in key_pressed:
         key_pressed[event.key] = False
+
+  # Collision
+  if pygame.sprite.groupcollide(frog_group, car1_group, True, False):
+    lives -= 1
+    frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+    frog_group.add(frog)
+    if lives == 0:
+      game_over = True
+      lives = 3
+
+  if pygame.sprite.groupcollide(frog_group, car2_group, True, False):
+    lives -= 1
+    frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+    frog_group.add(frog)
+    if lives == 0:
+      game_over = True
+      lives = 3
+
+  if pygame.sprite.groupcollide(frog_group, truck_group, True, False):
+    lives -= 1
+    frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+    frog_group.add(frog)
+    if lives == 0:
+      game_over = True
+      lives = 3
+
+  if pygame.sprite.groupcollide(frog_group, truck_rev_group, True, False):
+    lives -= 1
+    frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+    frog_group.add(frog)
+    if lives == 0:
+      game_over = True
+      lives = 3
 
   # Spacing out all of the objects
   time_now = pygame.time.get_ticks()

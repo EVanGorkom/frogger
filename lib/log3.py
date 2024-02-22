@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-class Log1(pygame.sprite.Sprite):
+class Log3(pygame.sprite.Sprite):
   def __init__(self, x, y):
     pygame.sprite.Sprite.__init__(self)
     self.image = pygame.image.load('img/log.png')
@@ -10,6 +10,6 @@ class Log1(pygame.sprite.Sprite):
     self.rect.y = y
   
   def update(self):
-    self.rect.x -= 5
+    self.rect.x -= 2
     if self.rect.right < 0:
       self.kill()

@@ -10,6 +10,6 @@ class Truck(pygame.sprite.Sprite):
     self.rect.y = y
   
   def update(self):
-    self.rect.x += 3
+    self.rect.x += 2
     if self.rect.right > 870:
       self.kill()
