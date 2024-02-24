@@ -54,6 +54,7 @@ frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_
 # Groups
 frog_group = pygame.sprite.GroupSingle()
 frog_group.add(frog)
+water_group = pygame.sprite.GroupSingle()
 car1_group = pygame.sprite.Group()
 car2_group = pygame.sprite.Group()
 truck_group = pygame.sprite.Group()
@@ -141,8 +142,14 @@ while running:
       # Check if the frog moves out of bounds
       if frog.rect.left < 0:
         frog.rect.left = 0
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
       elif frog.rect.right > SCREEN_WIDTH:
         frog.rect.right = SCREEN_WIDTH
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
 
   log2_collisions = pygame.sprite.spritecollide(frog, log2_group, False)
   if log2_collisions:
@@ -151,8 +158,14 @@ while running:
       # Check if the frog moves out of bounds
       if frog.rect.left < 0:
         frog.rect.left = 0
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
       elif frog.rect.right > SCREEN_WIDTH:
         frog.rect.right = SCREEN_WIDTH
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
 
   log3_collisions = pygame.sprite.spritecollide(frog, log3_group, False)
   if log3_collisions:
@@ -161,8 +174,14 @@ while running:
       # Check if the frog moves out of bounds
       if frog.rect.left < 0:
         frog.rect.left = 0
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
       elif frog.rect.right > SCREEN_WIDTH:
         frog.rect.right = SCREEN_WIDTH
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
 
   turtle1_collisions = pygame.sprite.spritecollide(frog, turtle1_group, False)
   if turtle1_collisions:
@@ -171,8 +190,14 @@ while running:
       # Check if the frog moves out of bounds
       if frog.rect.left < 0:
         frog.rect.left = 0
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
       elif frog.rect.right > SCREEN_WIDTH:
         frog.rect.right = SCREEN_WIDTH
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
 
   turtle2_collisions = pygame.sprite.spritecollide(frog, turtle2_group, False)
   if turtle2_collisions:
@@ -181,8 +206,18 @@ while running:
       # Check if the frog moves out of bounds
       if frog.rect.left < 0:
         frog.rect.left = 0
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
       elif frog.rect.right > SCREEN_WIDTH:
         frog.rect.right = SCREEN_WIDTH
+        lives -= 1
+        frog = Frog(SCREEN_WIDTH // 2, (SCREEN_HEIGHT // 2) + 370, SCREEN_WIDTH, SCREEN_HEIGHT)
+        frog_group.add(frog)
+
+  if frog.rect.top < 360 and not log1_collisions and not log2_collisions and not log3_collisions and not turtle1_collisions and not turtle2_collisions:
+    frog.rect.x = SCREEN_WIDTH // 2
+    frog.rect.y = (SCREEN_HEIGHT // 2) + 370
 
   # Spacing out all of the objects
   time_now = pygame.time.get_ticks()
@@ -242,7 +277,6 @@ while running:
 
   # render image variables
   screen.blit(fitted_background, (0,0))
-  screen.blit(frog.image, frog.rect)
   car1_group.draw(screen)
   car2_group.draw(screen)
   truck_group.draw(screen)
@@ -252,6 +286,7 @@ while running:
   log3_group.draw(screen)
   turtle1_group.draw(screen)
   turtle2_group.draw(screen)
+  screen.blit(frog.image, frog.rect)
 
   pygame.display.update()
 
